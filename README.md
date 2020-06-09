@@ -1,6 +1,6 @@
 # Getting Started
 
-## API Referencs
+### API Document
 [http://localhost:8000/swagger-ui.html](http://localhost:8000/swagger-ui.html)
 
 ### Reference Documentation
