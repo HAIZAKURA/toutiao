@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="run.nya.toutiao.model.dao.AuthDao">
+    <select id="getAllAuth" resultType="run.nya.toutiao.model.bean.Auth">
+        SELECT * FROM auth
+    </select>
+</mapper>
