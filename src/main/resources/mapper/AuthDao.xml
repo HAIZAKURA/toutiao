@@ -4,4 +4,8 @@
     <select id="getAllAuth" resultType="run.nya.toutiao.model.bean.Auth">
         SELECT * FROM auth
     </select>
+    <select id="getAuthById" resultType="run.nya.toutiao.model.bean.Auth">
+        SELECT * FROM auth
+        WHERE aid = #{aid}
+    </select>
 </mapper>
