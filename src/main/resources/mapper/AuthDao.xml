@@ -8,4 +8,9 @@
         SELECT * FROM auth
         WHERE aid = #{aid}
     </select>
+    <update id="modAuth">
+        update auth
+        SET aname = #{aname}, adesc = #{adesc}
+        WHERE aid = #{aid}
+    </update>
 </mapper>
