@@ -15,6 +15,26 @@ public class Checker {
     }
 
     /**
+     * @method isManager
+     * @remark 判断用户是否为内容管理员
+     * @param  session HttpSession
+     * @return boolean
+     */
+    public static boolean isManager(HttpSession session) {
+        return true;
+    }
+
+    /**
+     * @method isEditor
+     * @remark 判断用户是否为编辑
+     * @param  session HttpSession
+     * @return boolean
+     */
+    public static boolean isEditor(HttpSession session) {
+        return true;
+    }
+
+    /**
      * @method isUser
      * @remark 判断用户是否为用户
      * @param  session HttpSession
