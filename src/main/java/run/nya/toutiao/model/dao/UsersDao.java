@@ -10,10 +10,10 @@ import java.util.List;
 public interface UsersDao {
 
     // 用户登录
-    Users userFind(@Param("uname") String uname, @Param("upass") String upass);
+    Users userLogin(@Param("uname") String uname, @Param("upass") String upass);
 
     // 管理登录
-    Users adminFind(@Param("uname") String uname, @Param("upass") String upass);
+    Users adminLogin(@Param("uname") String uname, @Param("upass") String upass);
 
     // 获取所有用户列表
     List<Users> getAllUsers();
@@ -32,10 +32,19 @@ public interface UsersDao {
     Integer addUser(@Param("uname") String uname, @Param("upass") String upass,
                     @Param("umail") String umail, @Param("aid") Integer aid);
 
-    // 删除用户
-    Integer delUser(@Param("uid") Integer uid);
+    // 封禁用户 通过uid
+    Integer banUserById(@Param("uid") Integer uid);
 
-    // 封禁用户
-    Integer banUser(@Param("uid") Integer uid);
+    // 封禁用户 通过uname
+    Integer banUserByName(@Param("uname") String uname);
+
+    // 修改用户信息 通过uid
+    Integer modUser(@Param("uid") Integer uid, @Param("umail") String umail,
+                    @Param("udesc") String udesc);
+
+    // 修改用户密码 Self
+    Integer updUserPass(@Param("uid") Integer uid, @Param("upass") String upass,
+                        @Param("new_upass") String new_upass);
+
 
 }
