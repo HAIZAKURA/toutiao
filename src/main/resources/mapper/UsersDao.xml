@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="run.nya.toutiao.model.dao.UsersDao">
+    <select id="getAllUsers" resultType="run.nya.toutiao.model.bean.Users">
+        SELECT uid, uname, umail, udesc, ustat, utime, aid
+        FROM users
+    </select>
+    <select id="getUserById" resultType="run.nya.toutiao.model.bean.Users">
+        SELECT uid, uname, umail, udesc, ustat, utime, aid
+        FROM users
+        WHERE uid = #{uid}
+    </select>
+    <select id="getUserByName" resultType="run.nya.toutiao.model.bean.Users">
+        SELECT uid, uname, umail, udesc, ustat, utime, aid
+        FROM users
+        WHERE uname = #{uname}
+    </select>
+</mapper>
