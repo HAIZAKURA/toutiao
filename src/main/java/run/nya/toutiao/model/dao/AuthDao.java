@@ -15,6 +15,9 @@ public interface AuthDao {
     // 获取权限信息 通过aid
     Auth getAuthById(@Param("aid") Integer aid);
 
+    // 获取权限信息 通过aname
+    Auth getAuthByName(@Param("aname") String aname);
+
     // 修改权限信息
     Integer modAuth(@Param("aid") Integer aid, @Param("aname") String aname,
                     @Param("adesc") String adesc);

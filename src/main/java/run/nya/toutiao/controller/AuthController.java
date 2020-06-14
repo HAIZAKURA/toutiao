@@ -53,25 +53,36 @@ public class AuthController {
     }
 
     /**
-     * @api    getAuthById
-     * @remark 获取权限信息 通过aid
+     * @api    getAuthBy
+     * @remark 获取权限信息 通过aid/aname
      * @access ALL
      * @method GET
-     * @route  /api/auth/{aid}
-     * @param  aid Integer
-     * @return res JSONString
+     * @route  /api/auth/{value}
+     * @param  value String
+     * @return res   JSONString
      */
-    @RequestMapping(value = "/api/auth/{aid}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    @ApiOperation(value = "Get an Auth Information By ID", httpMethod = "GET", notes = "ALL")
-    public String getAuthById(@PathVariable(value = "aid") Integer aid) {
+    @RequestMapping(value = "/api/auth/{value}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ApiOperation(value = "Get an Auth Information By ID or Name", httpMethod = "GET", notes = "ALL")
+    public String getAuthBy(@PathVariable(value = "value") String value) {
         JSONObject res = new JSONObject();
-        try {
-            Auth auth = authDao.getAuthById(aid);
-            res.put("code", 1);
-            res.put("data", auth);
-        } catch (Exception e) {
-            e.printStackTrace();
-            res.put("code", 0);
+        if (Checker.isStartNum(value)) {
+            try {
+                Auth auth = authDao.getAuthById(Integer.valueOf(value));
+                res.put("code", 1);
+                res.put("data", auth);
+            } catch (Exception e) {
+                e.printStackTrace();
+                res.put("code", 0);
+            }
+        } else {
+            try {
+                Auth auth = authDao.getAuthByName(value);
+                res.put("code", 1);
+                res.put("data", auth);
+            } catch (Exception e) {
+                e.printStackTrace();
+                res.put("code", 0);
+            }
         }
         return res.toJSONString();
     }
