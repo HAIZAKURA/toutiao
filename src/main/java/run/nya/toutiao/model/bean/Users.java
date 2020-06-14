@@ -22,6 +22,9 @@ public class Users {
     // 用户状态
     private Integer ustat;
 
+    // 用户简介
+    private String udesc;
+
     // 权限ID
     private Integer aid;
 
@@ -71,6 +74,14 @@ public class Users {
 
     public void setUstat(Integer ustat) {
         this.ustat = ustat;
+    }
+
+    public String getUdesc() {
+        return udesc;
+    }
+
+    public void setUdesc(String udesc) {
+        this.udesc = udesc;
     }
 
     public Integer getAid() {
