@@ -1,9 +1,19 @@
 package run.nya.toutiao.utils;
 
 import javax.servlet.http.HttpSession;
-import java.util.Objects;
 
 public class Checker {
+
+    /**
+     * @method isLogin
+     * @remark 判断是否登录
+     * @param  session HttpSession
+     * @return boolean
+     */
+    public static boolean isLogin(HttpSession session) {
+        return (session.getAttribute("uid") != null && session.getAttribute("uname") != null &&
+                session.getAttribute("aid") != null);
+    }
 
     /**
      * @method isAdmin
@@ -12,7 +22,7 @@ public class Checker {
      * @return boolean
      */
     public static boolean isAdmin(HttpSession session){
-        return true;
+        return (isLogin(session) && session.getAttribute("aid").toString().equals("4"));
     }
 
     /**
@@ -22,7 +32,7 @@ public class Checker {
      * @return boolean
      */
     public static boolean isManager(HttpSession session) {
-        return true;
+        return (isLogin(session) && session.getAttribute("aid").toString().equals("3"));
     }
 
     /**
@@ -32,7 +42,7 @@ public class Checker {
      * @return boolean
      */
     public static boolean isEditor(HttpSession session) {
-        return true;
+        return (isLogin(session) && session.getAttribute("aid").toString().equals("2"));
     }
 
     /**
@@ -42,7 +52,7 @@ public class Checker {
      * @return boolean
      */
     public static boolean isUser(HttpSession session){
-        return true;
+        return isLogin(session);
     }
 
     /**
