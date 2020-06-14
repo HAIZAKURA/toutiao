@@ -1,6 +1,7 @@
 package run.nya.toutiao.utils;
 
 import javax.servlet.http.HttpSession;
+import java.util.Objects;
 
 public class Checker {
 
@@ -42,6 +43,20 @@ public class Checker {
      */
     public static boolean isUser(HttpSession session){
         return true;
+    }
+
+    /**
+     * @method isStartNum
+     * @remark 判断是否数字开头
+     * @param  str String
+     * @return boolean
+     */
+    public static boolean isStartNum(String str) {
+        if (str == null || str.trim().length() <= 0) {
+            return false;
+        } else {
+            return Character.isDigit(str.charAt(0));
+        }
     }
 
 }
