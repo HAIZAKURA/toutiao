@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="run.nya.toutiao.model.dao.UsersDao">
+    <select id="userLogin" resultType="run.nya.toutiao.model.bean.Users">
+        SELECT uid, uname, ustat, aid
+        FROM users
+        WHERE uname = #{uname} AND upass = #{upass}
+    </select>
+    <select id="adminLogin" resultType="run.nya.toutiao.model.bean.Users">
+        SELECT uid, uname, ustat, aid
+        FROM users
+        WHERE uname = #{uname} AND upass = #{upass} AND aid != 1
+    </select>
     <select id="getAllUsers" resultType="run.nya.toutiao.model.bean.Users">
         SELECT uid, uname, umail, udesc, ustat, utime, aid
         FROM users
@@ -15,4 +25,32 @@
         FROM users
         WHERE uname = #{uname}
     </select>
+    <insert id="regUser">
+        INSERT INTO users (uname, upass, umail)
+        VALUES (#{uname}, #{upass}, #{umail})
+    </insert>
+    <insert id="addUser">
+        INSERT INTO users (uname, upass, umail, aid)
+        VALUES (#{uname}, #{upass}, #{umail}, #{aid})
+    </insert>
+    <update id="banUserById">
+        UPDATE users
+        SET ustat = 1
+        WHERE uid = #{uid}
+    </update>
+    <update id="banUserByName">
+        UPDATE users
+        SET ustat = 1
+        WHERE uname = #{uname}
+    </update>
+    <update id="modUser">
+        UPDATE users
+        SET umail = #{umail}, udesc = #{udesc}
+        WHERE uid = #{uid}
+    </update>
+    <update id="updUserPass">
+        UPDATE users
+        SET upass = #{new_upass}
+        WHERE uid = #{uid} AND upass = #{upass}
+    </update>
 </mapper>
