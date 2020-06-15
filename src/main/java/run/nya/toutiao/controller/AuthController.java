@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import run.nya.toutiao.model.bean.Auth;
 import run.nya.toutiao.model.dao.AuthDao;
-import run.nya.toutiao.utils.Checker;
+import run.nya.toutiao.utils.CheckerUtils;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -65,7 +65,7 @@ public class AuthController {
     public String getAuthBy(@PathVariable("value") String value) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
-        if (Checker.isStartNum(value)) {
+        if (CheckerUtils.isStartNum(value)) {
             try {
                 Auth auth = authDao.getAuthById(Integer.valueOf(value));
                 res.put("code", 1);
@@ -108,7 +108,7 @@ public class AuthController {
         JSONObject data = new JSONObject();
         Auth reqAuth = JSON.parseObject(body.toJSONString(), Auth.class);
         data.put("aid", aid);
-        if (Checker.isAdmin(session)) {
+        if (CheckerUtils.isAdmin(session)) {
             try {
                 Integer back = authDao.modAuth(aid, reqAuth.getAname(), reqAuth.getAdesc());
                 if (back > 0) {

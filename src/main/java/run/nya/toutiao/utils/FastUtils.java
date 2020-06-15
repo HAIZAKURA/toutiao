@@ -8,7 +8,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Tools {
+public class FastUtils {
 
     /**
      * @method getMD5

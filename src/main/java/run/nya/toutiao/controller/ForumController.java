@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import run.nya.toutiao.model.bean.Forum;
 import run.nya.toutiao.model.dao.ForumDao;
-import run.nya.toutiao.utils.Checker;
+import run.nya.toutiao.utils.CheckerUtils;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -64,7 +64,7 @@ public class ForumController {
     public String getForumBy(@PathVariable("value") String value) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
-        if (Checker.isStartNum(value)) {
+        if (CheckerUtils.isStartNum(value)) {
             try {
                 Forum forum = forumDao.getForumById(Integer.valueOf(value));
                 res.put("code", 1);
@@ -108,7 +108,7 @@ public class ForumController {
         String fdesc = forum.getFdesc();
         data.put("fname", fname);
         data.put("fdesc", fdesc);
-        if (Checker.isAdmin(session)) {
+        if (CheckerUtils.isAdmin(session)) {
             try {
                 Integer back = forumDao.addForum(fname, fdesc);
                 if (back > 0) {
@@ -142,7 +142,7 @@ public class ForumController {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
         data.put("fid", fid);
-        if (Checker.isAdmin(session)) {
+        if (CheckerUtils.isAdmin(session)) {
             try {
                 Integer back = forumDao.defForum(fid);
                 if (back > 0) {
@@ -182,7 +182,7 @@ public class ForumController {
         data.put("fid", fid);
         data.put("fname", fname);
         data.put("fdesc", fdesc);
-        if (Checker.isAdmin(session)) {
+        if (CheckerUtils.isAdmin(session)) {
             try {
                 Integer back = forumDao.modForum(fid, fname, fdesc);
                 if (back > 0) {

@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import run.nya.toutiao.model.bean.Users;
 import run.nya.toutiao.model.dao.UsersDao;
-import run.nya.toutiao.utils.Checker;
-import run.nya.toutiao.utils.Tools;
+import run.nya.toutiao.utils.CheckerUtils;
+import run.nya.toutiao.utils.FastUtils;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -45,13 +45,13 @@ public class UsersController {
     public String userLogin(@RequestBody JSONObject body, Boolean keepAlive, ModelMap modelMap, HttpSession session) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
-        if (Checker.isLogin(session)) {
+        if (CheckerUtils.isLogin(session)) {
             res.put("code", 0);
-            res.put("data", Tools.sessionToJSON(session));
+            res.put("data", FastUtils.sessionToJSON(session));
         } else {
             Users reqUser = JSONObject.parseObject(body.toJSONString(), Users.class);
             String uname = reqUser.getUname();
-            String upass = Tools.getMD5(uname + "#" + reqUser.getUpass());
+            String upass = FastUtils.getMD5(uname + "#" + reqUser.getUpass());
             try {
                 Users users = usersDao.userLogin(uname, upass);
                 if (users.getUstat() != 0) {
@@ -94,13 +94,13 @@ public class UsersController {
     public String adminLogin(@RequestBody JSONObject body, ModelMap modelMap, HttpSession session) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
-        if (Checker.isLogin(session)) {
+        if (CheckerUtils.isLogin(session)) {
             res.put("code", 0);
-            res.put("data", Tools.sessionToJSON(session));
+            res.put("data", FastUtils.sessionToJSON(session));
         } else {
             Users reqUser = JSONObject.parseObject(body.toJSONString(), Users.class);
             String uname = reqUser.getUname();
-            String upass = Tools.getMD5(uname + "#" + reqUser.getUpass());
+            String upass = FastUtils.getMD5(uname + "#" + reqUser.getUpass());
             try {
                 Users users = usersDao.adminLogin(uname, upass);
                 if (users.getUstat() != 0) {
@@ -164,9 +164,9 @@ public class UsersController {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
         Users users = JSONObject.parseObject(body.toJSONString(), Users.class);
-        if (Checker.isLogin(session)) {
+        if (CheckerUtils.isLogin(session)) {
             res.put("code", 0);
-            res.put("data", Tools.sessionToJSON(session));
+            res.put("data", FastUtils.sessionToJSON(session));
         } else {
             if (StringUtils.isEmpty(users.getUname()) || StringUtils.isEmpty(users.getUpass()) ||
                     StringUtils.isEmpty(users.getUmail())) {
@@ -175,7 +175,7 @@ public class UsersController {
                 res.put("code", 0);
             } else {
                 String uname = users.getUname();
-                String upass = Tools.getMD5(uname + "#" + users.getUpass());
+                String upass = FastUtils.getMD5(uname + "#" + users.getUpass());
                 String umail = users.getUmail();
                 data.put("uname", uname);
                 data.put("umail", umail);
@@ -212,13 +212,13 @@ public class UsersController {
         JSONObject data = new JSONObject();
         Users users = JSONObject.parseObject(body.toJSONString(), Users.class);
         String uname = users.getUname();
-        String upass = Tools.getMD5(uname + "#" + users.getUpass());
+        String upass = FastUtils.getMD5(uname + "#" + users.getUpass());
         String umail = users.getUmail();
         Integer aid = users.getAid();
         data.put("uname", uname);
         data.put("umail", umail);
         data.put("aid", aid);
-        if (Checker.isAdmin(session)) {
+        if (CheckerUtils.isAdmin(session)) {
             try {
                 Integer back = usersDao.addUser(uname, upass, umail, aid);
                 if (back > 0) {
@@ -276,7 +276,7 @@ public class UsersController {
     public String getUserBy(@PathVariable("value") String value) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
-        if (Checker.isStartNum(value)) {
+        if (CheckerUtils.isStartNum(value)) {
             data.put("uid", Integer.valueOf(value));
             try {
                 Users users = usersDao.getUserById(Integer.valueOf(value));
@@ -317,8 +317,8 @@ public class UsersController {
     public String banUserBy(@PathVariable("value") String value, HttpSession session) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
-        if (Checker.isAdmin(session) || Checker.isManager(session)) {
-            if (Checker.isStartNum(value)) {
+        if (CheckerUtils.isAdmin(session) || CheckerUtils.isManager(session)) {
+            if (CheckerUtils.isStartNum(value)) {
                 data.put("uid", Integer.valueOf(value));
                 try {
                     Integer back = usersDao.banUserById(Integer.valueOf(value));
@@ -367,7 +367,7 @@ public class UsersController {
     public String modUser(@RequestBody JSONObject body, HttpSession session) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
-        if (Checker.isLogin(session)) {
+        if (CheckerUtils.isLogin(session)) {
             Integer uid = Integer.valueOf(session.getAttribute("uid").toString());
             Users users = JSONObject.parseObject(body.toJSONString(), Users.class);
             String umail = users.getUmail();
@@ -407,7 +407,7 @@ public class UsersController {
     public String modUserAdmin(@PathVariable("uid") Integer uid, @RequestBody JSONObject body, HttpSession session) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
-        if (Checker.isAdmin(session)) {
+        if (CheckerUtils.isAdmin(session)) {
             Users users = JSONObject.parseObject(body.toJSONString(), Users.class);
             String umail = users.getUmail();
             String udesc = users.getUdesc();
@@ -446,13 +446,13 @@ public class UsersController {
     public String updUserPass(String upass, String new_upass, HttpSession session) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
-        if (Checker.isLogin(session)) {
-            data.put("data", Tools.sessionToJSON(session));
+        if (CheckerUtils.isLogin(session)) {
+            data.put("data", FastUtils.sessionToJSON(session));
             Integer uid = Integer.valueOf(session.getAttribute("uid").toString());
             String uname = session.getAttribute("uname").toString();
             try {
-                Integer back = usersDao.updUserPass(uid, Tools.getMD5(uname + "#" + upass),
-                        Tools.getMD5(uname + "#" + new_upass));
+                Integer back = usersDao.updUserPass(uid, FastUtils.getMD5(uname + "#" + upass),
+                        FastUtils.getMD5(uname + "#" + new_upass));
                 if (back > 0) {
                     res.put("code", 1);
                 } else {

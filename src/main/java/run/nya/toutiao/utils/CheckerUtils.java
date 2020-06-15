@@ -2,7 +2,7 @@ package run.nya.toutiao.utils;
 
 import javax.servlet.http.HttpSession;
 
-public class Checker {
+public class CheckerUtils {
 
     /**
      * @method isLogin
