@@ -8,7 +8,7 @@ public class Checker {
      * @method isLogin
      * @remark 判断是否登录
      * @param  session HttpSession
-     * @return boolean
+     * @return         boolean
      */
     public static boolean isLogin(HttpSession session) {
         return (session.getAttribute("uid") != null && session.getAttribute("uname") != null &&
@@ -19,7 +19,7 @@ public class Checker {
      * @method isAdmin
      * @remark 判断用户是否为管理员
      * @param  session HttpSession
-     * @return boolean
+     * @return         boolean
      */
     public static boolean isAdmin(HttpSession session){
         return (isLogin(session) && session.getAttribute("aid").toString().equals("4"));
@@ -29,7 +29,7 @@ public class Checker {
      * @method isManager
      * @remark 判断用户是否为内容管理员
      * @param  session HttpSession
-     * @return boolean
+     * @return         boolean
      */
     public static boolean isManager(HttpSession session) {
         return (isLogin(session) && session.getAttribute("aid").toString().equals("3"));
@@ -39,7 +39,7 @@ public class Checker {
      * @method isEditor
      * @remark 判断用户是否为编辑
      * @param  session HttpSession
-     * @return boolean
+     * @return         boolean
      */
     public static boolean isEditor(HttpSession session) {
         return (isLogin(session) && session.getAttribute("aid").toString().equals("2"));
@@ -49,7 +49,7 @@ public class Checker {
      * @method isUser
      * @remark 判断用户是否为用户
      * @param  session HttpSession
-     * @return boolean
+     * @return         boolean
      */
     public static boolean isUser(HttpSession session){
         return isLogin(session);
@@ -59,7 +59,7 @@ public class Checker {
      * @method isStartNum
      * @remark 判断是否数字开头
      * @param  str String
-     * @return boolean
+     * @return     boolean
      */
     public static boolean isStartNum(String str) {
         if (str == null || str.trim().length() <= 0) {
