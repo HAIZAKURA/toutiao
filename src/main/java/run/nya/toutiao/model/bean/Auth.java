@@ -34,4 +34,5 @@ public class Auth {
     public void setAdesc(String adesc) {
         this.adesc = adesc;
     }
+
 }
