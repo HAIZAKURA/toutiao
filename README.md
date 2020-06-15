@@ -1,5 +1,7 @@
 # Getting Started
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/34f0f731ce63466f91af61cfb3992f32)](https://app.codacy.com/manual/HAIZAKURA/toutiao?utm_source=github.com&utm_medium=referral&utm_content=HAIZAKURA/toutiao&utm_campaign=Badge_Grade_Dashboard)
+
 ### API Document
 [http://localhost:8000/swagger-ui.html](http://localhost:8000/swagger-ui.html)
 
