@@ -1,5 +1,8 @@
 package run.nya.toutiao.utils;
 
+import com.alibaba.fastjson.JSONObject;
+
+import javax.servlet.http.HttpSession;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
@@ -44,6 +47,20 @@ public class Tools {
         Date date = new Date();
         res = sdf.format(date);
         return res;
+    }
+
+    /**
+     * @method sessionToJSON
+     * @remark session转换成JSON
+     * @param  session HttpSession
+     * @return data    JSONObject
+     */
+    public static JSONObject sessionToJSON(HttpSession session) {
+        JSONObject data = new JSONObject();
+        data.put("uid", Integer.valueOf(session.getAttribute("uid").toString()));
+        data.put("uname", session.getAttribute("uname").toString());
+        data.put("aid", Integer.valueOf(session.getAttribute("aid").toString()));
+        return data;
     }
 
 }
