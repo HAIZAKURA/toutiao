@@ -14,9 +14,7 @@ import run.nya.toutiao.utils.Checker;
 import run.nya.toutiao.utils.Tools;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @SessionAttributes(value = {"uid", "uname", "aid"}, types = {Integer.class, String.class, Integer.class})
@@ -46,26 +44,28 @@ public class UsersController {
     @ApiOperation(value = "User Login", httpMethod = "POST", notes = "ALL")
     public String userLogin(@RequestBody JSONObject body, ModelMap modelMap, HttpSession session) {
         JSONObject res = new JSONObject();
+        JSONObject data = new JSONObject();
         if (Checker.isLogin(session)) {
             res.put("code", 0);
+            res.put("data", Tools.sessionToJSON(session));
         } else {
             Users reqUser = JSONObject.parseObject(body.toJSONString(), Users.class);
             String uname = reqUser.getUname();
             String upass = Tools.getMD5(uname + "#" + reqUser.getUpass());
             Users users = usersDao.userLogin(uname, upass);
             if (users.getUstat() != 0) {
+                data.put("uname", uname);
                 res.put("code", -1);
             } else {
                 modelMap.addAttribute("uid", users.getUid());
                 modelMap.addAttribute("uname", users.getUname());
                 modelMap.addAttribute("aid", users.getAid());
-                Map<String, Object> data = new HashMap<>();
                 data.put("uid", users.getUid());
                 data.put("uname", users.getUname());
                 data.put("aid", users.getAid());
                 res.put("code", 1);
-                res.put("data", data);
             }
+            res.put("data", data);
         }
         return res.toJSONString();
     }
@@ -83,26 +83,28 @@ public class UsersController {
     @ApiOperation(value = "Admin or Manager Login", httpMethod = "POST", notes = "ALL")
     public String adminLogin(@RequestBody JSONObject body, ModelMap modelMap, HttpSession session) {
         JSONObject res = new JSONObject();
+        JSONObject data = new JSONObject();
         if (Checker.isLogin(session)) {
             res.put("code", 0);
+            res.put("data", Tools.sessionToJSON(session));
         } else {
             Users reqUser = JSONObject.parseObject(body.toJSONString(), Users.class);
             String uname = reqUser.getUname();
             String upass = Tools.getMD5(uname + "#" + reqUser.getUpass());
             Users users = usersDao.adminLogin(uname, upass);
             if (users.getUstat() != 0) {
+                data.put("uname", uname);
                 res.put("code", -1);
             } else {
                 modelMap.addAttribute("uid", users.getUid());
                 modelMap.addAttribute("uname", users.getUname());
                 modelMap.addAttribute("aid", users.getAid());
-                Map<String, Object> data = new HashMap<>();
                 data.put("uid", users.getUid());
                 data.put("uname", users.getUname());
                 data.put("aid", users.getAid());
                 res.put("code", 1);
-                res.put("data", data);
             }
+            res.put("data", data);
         }
         return res.toJSONString();
     }
@@ -120,6 +122,7 @@ public class UsersController {
     @ApiOperation(value = "User Logout", httpMethod = "GET", notes = "ALL")
     public String logOut(SessionStatus sessionStatus) {
         JSONObject res = new JSONObject();
+        JSONObject data = new JSONObject();
         try {
             sessionStatus.setComplete();
             res.put("code", 1);
@@ -127,6 +130,7 @@ public class UsersController {
             e.printStackTrace();
             res.put("code", 0);
         }
+        res.put("data", data);
         return res.toJSONString();
     }
 
@@ -143,17 +147,24 @@ public class UsersController {
     @ApiOperation(value = "User Register", httpMethod = "POST", notes = "ALL")
     public String userRegister(@RequestBody JSONObject body, HttpSession session) {
         JSONObject res = new JSONObject();
+//        Map<String, Object> data = new HashMap<>();
+        JSONObject data = new JSONObject();
         Users users = JSONObject.parseObject(body.toJSONString(), Users.class);
         if (Checker.isLogin(session)) {
-            res.put("code", -1);
+            res.put("code", 0);
+            res.put("data", Tools.sessionToJSON(session));
         } else {
             if (StringUtils.isEmpty(users.getUname()) || StringUtils.isEmpty(users.getUpass()) ||
                     StringUtils.isEmpty(users.getUmail())) {
+                data.put("uname", users.getUname());
+                data.put("umail", users.getUmail());
                 res.put("code", 0);
             } else {
                 String uname = users.getUname();
                 String upass = Tools.getMD5(uname + "#" + users.getUpass());
                 String umail = users.getUmail();
+                data.put("uname", uname);
+                data.put("umail", umail);
                 try {
                     Integer back = usersDao.regUser(uname, upass, umail);
                     if (back > 0) {
@@ -163,9 +174,9 @@ public class UsersController {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    res.put("code", 0);
                 }
             }
+            res.put("data", data);
         }
         return res.toJSONString();
     }
@@ -184,12 +195,16 @@ public class UsersController {
     @ApiOperation(value = "Create User", httpMethod = "POST", notes = "Admin")
     public String addUser(@RequestBody JSONObject body, HttpSession session) {
         JSONObject res = new JSONObject();
+        JSONObject data = new JSONObject();
         if (Checker.isAdmin(session)) {
             Users users = JSONObject.parseObject(body.toJSONString(), Users.class);
             String uname = users.getUname();
             String upass = Tools.getMD5(uname + "#" + users.getUpass());
             String umail = users.getUmail();
             Integer aid = users.getAid();
+            data.put("uname", uname);
+            data.put("umail", umail);
+            data.put("aid", aid);
             try {
                 Integer back = usersDao.addUser(uname, upass, umail, aid);
                 if (back > 0) {
@@ -204,6 +219,7 @@ public class UsersController {
         } else {
             res.put("code", -1);
         }
+        res.put("data", data);
         return res.toJSONString();
     }
 
@@ -219,6 +235,7 @@ public class UsersController {
     @ApiOperation(value = "Get All Users Information", httpMethod = "GET", notes = "ALL")
     public String getAllUsers() {
         JSONObject res = new JSONObject();
+        JSONObject data = new JSONObject();
         try {
             List<Users> usersList = usersDao.getAllUsers();
             res.put("code", 1);
@@ -226,6 +243,7 @@ public class UsersController {
         } catch (Exception e) {
             e.printStackTrace();
             res.put("code", 0);
+            res.put("data", data);
         }
         return res.toJSONString();
     }
@@ -243,7 +261,9 @@ public class UsersController {
     @ApiOperation(value = "Get User Information By ID or Name", httpMethod = "GET", notes = "ALL")
     public String getUserBy(@PathVariable("value") String value) {
         JSONObject res = new JSONObject();
+        JSONObject data = new JSONObject();
         if (Checker.isStartNum(value)) {
+            data.put("uid", Integer.valueOf(value));
             try {
                 Users users = usersDao.getUserById(Integer.valueOf(value));
                 res.put("code", 1);
@@ -251,8 +271,10 @@ public class UsersController {
             } catch (Exception e) {
                 e.printStackTrace();
                 res.put("code", 0);
+                res.put("data", data);
             }
         } else {
+            data.put("uname", value);
             try {
                 Users users = usersDao.getUserByName(value);
                 res.put("code", 1);
@@ -260,6 +282,7 @@ public class UsersController {
             } catch (Exception e) {
                 e.printStackTrace();
                 res.put("code", 0);
+                res.put("data", data);
             }
         }
         return res.toJSONString();
@@ -279,8 +302,10 @@ public class UsersController {
     @ApiOperation(value = "Ban User By ID or Name", httpMethod = "DELETE", notes = "Admin / Manager")
     public String banUserBy(@PathVariable("value") String value, HttpSession session) {
         JSONObject res = new JSONObject();
+        JSONObject data = new JSONObject();
         if (Checker.isAdmin(session) || Checker.isManager(session)) {
             if (Checker.isStartNum(value)) {
+                data.put("uid", Integer.valueOf(value));
                 try {
                     Integer back = usersDao.banUserById(Integer.valueOf(value));
                     if (back > 0) {
@@ -293,6 +318,7 @@ public class UsersController {
                     res.put("code", 0);
                 }
             } else {
+                data.put("uname", value);
                 try {
                     Integer back = usersDao.banUserByName(value);
                     if (back > 0) {
@@ -308,6 +334,7 @@ public class UsersController {
         } else {
             res.put("code", -1);
         }
+        res.put("data", data);
         return res.toJSONString();
     }
 
@@ -325,11 +352,13 @@ public class UsersController {
     @ApiOperation(value = "Modify User Information By Self", httpMethod = "PUT", notes = "ALL")
     public String modUser(@RequestBody JSONObject body, HttpSession session) {
         JSONObject res = new JSONObject();
+        JSONObject data = new JSONObject();
         if (Checker.isLogin(session)) {
             Integer uid = Integer.valueOf(session.getAttribute("uid").toString());
             Users users = JSONObject.parseObject(body.toJSONString(), Users.class);
             String umail = users.getUmail();
             String udesc = users.getUdesc();
+            data.put("uid", uid);
             try {
                 Integer back = usersDao.modUser(uid, umail, udesc);
                 if (back > 0) {
@@ -344,6 +373,7 @@ public class UsersController {
         } else {
             res.put("code", -1);
         }
+        res.put("data", data);
         return res.toJSONString();
     }
 
@@ -362,10 +392,12 @@ public class UsersController {
     @ApiOperation(value = "Modify User Information By Admin", httpMethod = "PUT", notes = "Admin")
     public String modUserAdmin(@PathVariable("uid") Integer uid, @RequestBody JSONObject body, HttpSession session) {
         JSONObject res = new JSONObject();
+        JSONObject data = new JSONObject();
         if (Checker.isAdmin(session)) {
             Users users = JSONObject.parseObject(body.toJSONString(), Users.class);
             String umail = users.getUmail();
             String udesc = users.getUdesc();
+            data.put("uid", uid);
             try {
                 Integer back = usersDao.modUser(uid, umail, udesc);
                 if (back > 0) {
@@ -380,6 +412,7 @@ public class UsersController {
         } else {
             res.put("code", -1);
         }
+        res.put("data", data);
         return res.toJSONString();
     }
 
@@ -398,7 +431,9 @@ public class UsersController {
     @ApiOperation(value = "Modify User Password By Self", httpMethod = "PUT", notes = "ALL")
     public String updUserPass(String upass, String new_upass, HttpSession session) {
         JSONObject res = new JSONObject();
+        JSONObject data = new JSONObject();
         if (Checker.isLogin(session)) {
+            data.put("data", Tools.sessionToJSON(session));
             Integer uid = Integer.valueOf(session.getAttribute("uid").toString());
             String uname = session.getAttribute("uname").toString();
             try {
@@ -416,6 +451,7 @@ public class UsersController {
         } else {
             res.put("code", -1);
         }
+        res.put("data", data);
         return res.toJSONString();
     }
 
