@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import run.nya.toutiao.model.bean.Auth;
@@ -12,9 +11,7 @@ import run.nya.toutiao.model.dao.AuthDao;
 import run.nya.toutiao.utils.Checker;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @Api(tags = {"Auth"})
@@ -41,6 +38,7 @@ public class AuthController {
     @ApiOperation(value = "Get All Auth Information", httpMethod = "GET", notes = "ALL")
     public Object getAllAuth() {
         JSONObject res = new JSONObject();
+        JSONObject data = new JSONObject();
         try {
             List<Auth> authList = authDao.getAllAuth();
             res.put("code", 1);
@@ -48,6 +46,7 @@ public class AuthController {
         } catch (Exception e) {
             e.printStackTrace();
             res.put("code", 0);
+            res.put("data", data);
         }
         return res.toJSONString();
     }
@@ -65,6 +64,7 @@ public class AuthController {
     @ApiOperation(value = "Get an Auth Information By ID or Name", httpMethod = "GET", notes = "ALL")
     public String getAuthBy(@PathVariable(value = "value") String value) {
         JSONObject res = new JSONObject();
+        JSONObject data = new JSONObject();
         if (Checker.isStartNum(value)) {
             try {
                 Auth auth = authDao.getAuthById(Integer.valueOf(value));
@@ -73,6 +73,7 @@ public class AuthController {
             } catch (Exception e) {
                 e.printStackTrace();
                 res.put("code", 0);
+                res.put("data", data);
             }
         } else {
             try {
@@ -82,6 +83,7 @@ public class AuthController {
             } catch (Exception e) {
                 e.printStackTrace();
                 res.put("code", 0);
+                res.put("data", data);
             }
         }
         return res.toJSONString();
@@ -103,17 +105,16 @@ public class AuthController {
     public String modAuthById(@PathVariable(value = "aid") Integer aid, @RequestBody JSONObject body,
                               HttpSession session) {
         JSONObject res = new JSONObject();
+        JSONObject data = new JSONObject();
         Auth reqAuth = JSON.parseObject(body.toJSONString(), Auth.class);
+        data.put("aid", aid);
         if (Checker.isAdmin(session)) {
             try {
                 Integer back = authDao.modAuth(aid, reqAuth.getAname(), reqAuth.getAdesc());
                 if (back > 0) {
-                    Map<String, Object> data = new HashMap<>();
-                    data.put("aid", aid);
                     data.put("aname", reqAuth.getAname());
                     data.put("adesc", reqAuth.getAdesc());
                     res.put("code", 1);
-                    res.put("data", data);
                 } else {
                     res.put("code", 0);
                 }
@@ -124,6 +125,7 @@ public class AuthController {
         } else {
             res.put("code", -1);
         }
+        res.put("data", data);
         return res.toJSONString();
     }
 
