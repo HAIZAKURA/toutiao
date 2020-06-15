@@ -14,7 +14,7 @@ public class Tools {
      * @method getMD5
      * @remark 计算字符串MD5值
      * @param  plainText String
-     * @return res
+     * @return res       String
      */
     public static String getMD5(String plainText) {
         try {
@@ -38,7 +38,7 @@ public class Tools {
     /**
      * @method getNowTime
      * @remark 获取当前时间 (yyyy-MM-dd HH:mm:ss)
-     * @return res
+     * @return res String
      */
     public static String getNowTime() {
         String res;
