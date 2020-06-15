@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="run.nya.toutiao.model.dao.ForumDao">
+    <select id="getAllForum" resultType="run.nya.toutiao.model.bean.Forum">
+        SELECT * FROM forum
+    </select>
+    <select id="getForumById" resultType="run.nya.toutiao.model.bean.Forum">
+        SELECT * FROM forum
+        WHERE fid = #{fid}
+    </select>
+    <select id="getForumByName" resultType="run.nya.toutiao.model.bean.Forum">
+        SELECT * FROM forum
+        WHERE fname = #{fname}
+    </select>
+    <insert id="addForum">
+        INSERT INTO forum (fname, fdesc)
+        VALUES (#{fname}, #{fdesc})
+    </insert>
+    <update id="delForum">
+        UPDATE forum
+        SET fdel = 1
+        WHERE fid = #{fid}
+    </update>
+    <update id="modForum">
+        UPDATE forum
+        SET fname = #{fname}, fdesc = #{fdesc}
+        WHERE fid = #{fid}
+    </update>
+</mapper>
