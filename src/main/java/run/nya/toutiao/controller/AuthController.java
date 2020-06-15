@@ -62,7 +62,7 @@ public class AuthController {
      */
     @RequestMapping(value = "/api/auth/{value}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ApiOperation(value = "Get an Auth Information By ID or Name", httpMethod = "GET", notes = "ALL")
-    public String getAuthBy(@PathVariable(value = "value") String value) {
+    public String getAuthBy(@PathVariable("value") String value) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
         if (Checker.isStartNum(value)) {
@@ -102,7 +102,7 @@ public class AuthController {
      */
     @RequestMapping(value = "/api/auth/{aid}", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
     @ApiOperation(value = "Modify an Auth Information By ID", httpMethod = "PUT", notes = "Admin")
-    public String modAuthById(@PathVariable(value = "aid") Integer aid, @RequestBody JSONObject body,
+    public String modAuthById(@PathVariable("aid") Integer aid, @RequestBody JSONObject body,
                               HttpSession session) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
