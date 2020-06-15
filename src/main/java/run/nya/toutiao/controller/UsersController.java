@@ -42,7 +42,7 @@ public class UsersController {
      */
     @RequestMapping(value = "/api/login", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ApiOperation(value = "User Login", httpMethod = "POST", notes = "ALL")
-    public String userLogin(@RequestBody JSONObject body, ModelMap modelMap, HttpSession session) {
+    public String userLogin(@RequestBody JSONObject body, Boolean keepAlive, ModelMap modelMap, HttpSession session) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
         if (Checker.isLogin(session)) {
@@ -61,6 +61,11 @@ public class UsersController {
                     modelMap.addAttribute("uid", users.getUid());
                     modelMap.addAttribute("uname", users.getUname());
                     modelMap.addAttribute("aid", users.getAid());
+                    if (keepAlive.equals(true)) {
+                        session.setMaxInactiveInterval(-1);
+                    } else {
+                        session.setMaxInactiveInterval(7 * 24 * 3600);
+                    }
                     data.put("uid", users.getUid());
                     data.put("uname", users.getUname());
                     data.put("aid", users.getAid());
@@ -205,15 +210,15 @@ public class UsersController {
     public String addUser(@RequestBody JSONObject body, HttpSession session) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
+        Users users = JSONObject.parseObject(body.toJSONString(), Users.class);
+        String uname = users.getUname();
+        String upass = Tools.getMD5(uname + "#" + users.getUpass());
+        String umail = users.getUmail();
+        Integer aid = users.getAid();
+        data.put("uname", uname);
+        data.put("umail", umail);
+        data.put("aid", aid);
         if (Checker.isAdmin(session)) {
-            Users users = JSONObject.parseObject(body.toJSONString(), Users.class);
-            String uname = users.getUname();
-            String upass = Tools.getMD5(uname + "#" + users.getUpass());
-            String umail = users.getUmail();
-            Integer aid = users.getAid();
-            data.put("uname", uname);
-            data.put("umail", umail);
-            data.put("aid", aid);
             try {
                 Integer back = usersDao.addUser(uname, upass, umail, aid);
                 if (back > 0) {
