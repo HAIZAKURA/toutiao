@@ -46,5 +46,4 @@ public interface UsersDao {
     Integer updUserPass(@Param("uid") Integer uid, @Param("upass") String upass,
                         @Param("new_upass") String new_upass);
 
-
 }
