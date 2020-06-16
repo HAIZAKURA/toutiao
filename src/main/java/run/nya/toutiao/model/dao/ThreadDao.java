@@ -16,10 +16,7 @@ public interface ThreadDao {
     List<Thread> getForumThread(@Param("fid") Integer fid);
 
     // 获取所有置顶主题
-    List<Thread> getAllTopThread();
-
-    // 获取分区所有置顶主题
-    List<Thread> getForumTopThread(@Param("fid") Integer fid);
+    List<Thread> getTopThread();
 
     // 获取用户所有主题
     // List<Thread> getUserThread(@Param("uid") Integer uid);
