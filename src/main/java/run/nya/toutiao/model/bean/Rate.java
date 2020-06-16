@@ -12,7 +12,7 @@ public class Rate {
     private Integer rbad;
 
     // 评分 评论数
-    private Integer rcum;
+    private Integer rcnum;
 
     // 主题ID
     private Integer tid;
@@ -42,11 +42,11 @@ public class Rate {
     }
 
     public Integer getRcum() {
-        return rcum;
+        return rcnum;
     }
 
-    public void setRcum(Integer rcum) {
-        this.rcum = rcum;
+    public void setRcum(Integer rcnum) {
+        this.rcnum = rcnum;
     }
 
     public Integer getTid() {
