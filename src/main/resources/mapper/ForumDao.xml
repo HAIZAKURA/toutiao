@@ -3,6 +3,7 @@
 <mapper namespace="run.nya.toutiao.model.dao.ForumDao">
     <select id="getAllForum" resultType="run.nya.toutiao.model.bean.Forum">
         SELECT * FROM forum
+        WHERE fdel = 0
     </select>
     <select id="getForumById" resultType="run.nya.toutiao.model.bean.Forum">
         SELECT * FROM forum
