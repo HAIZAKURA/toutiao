@@ -10,9 +10,6 @@ public class Comm {
     // 评论内容
     private String ccont;
 
-    // 评论回复ID
-    private Integer crcid;
-
     // 评论时间
     private Date ctime;
 
@@ -39,14 +36,6 @@ public class Comm {
 
     public void setCcont(String ccont) {
         this.ccont = ccont;
-    }
-
-    public Integer getCrcid() {
-        return crcid;
-    }
-
-    public void setCrcid(Integer crcid) {
-        this.crcid = crcid;
     }
 
     public Date getCtime() {
