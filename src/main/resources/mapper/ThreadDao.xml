@@ -14,7 +14,6 @@
         SELECT * FROM thread WHERE tid = #{tid} AND tdel = 0
     </select>
     <insert id="addThread">
-
     </insert>
     <update id="delThread">
         UPDATE thread SET tdel = 1 WHERE tid = #{tid}
