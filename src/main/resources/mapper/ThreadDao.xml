@@ -13,7 +13,11 @@
     <select id="getThread" resultType="run.nya.toutiao.model.bean.Thread">
         SELECT * FROM thread WHERE tid = #{tid} AND tdel = 0
     </select>
-    <insert id="addThread">
+    <insert id="addThread" parameterType="run.nya.toutiao.model.bean.Thread" useGeneratedKeys="true" keyProperty="tid">
+        INSERT INTO thread (tname, tcont, fid, uid) VALUES (#{tname}, #{tcont}, #{fid}, #{uid})
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="tid">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
     </insert>
     <update id="delThread">
         UPDATE thread SET tdel = 1 WHERE tid = #{tid}
