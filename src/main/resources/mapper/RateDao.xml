@@ -4,6 +4,9 @@
     <select id="getRate" resultType="run.nya.toutiao.model.bean.Rate">
         SELECT * FROM rate WHERE tid = #{tid}
     </select>
+    <insert id="addRate">
+        INSERT INTO rate (tid) VALUES (#{tid})
+    </insert>
     <update id="addGood">
         UPDATE rate SET rgood = rgood + 1 WHERE tid = #{tid}
     </update>

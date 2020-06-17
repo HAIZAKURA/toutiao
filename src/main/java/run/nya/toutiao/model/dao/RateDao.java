@@ -10,6 +10,9 @@ public interface RateDao {
     // 获取评分
     Rate getRate(@Param("tid") Integer tid);
 
+    // 增加评分
+    Integer addRate(@Param("tid") Integer tid);
+
     // 点赞
     Integer addGood(@Param("tid") Integer tid);
 
