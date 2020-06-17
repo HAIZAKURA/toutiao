@@ -110,6 +110,7 @@ public class UsersController {
                     modelMap.addAttribute("uid", users.getUid());
                     modelMap.addAttribute("uname", users.getUname());
                     modelMap.addAttribute("aid", users.getAid());
+                    session.setMaxInactiveInterval(15 * 60);
                     data.put("uid", users.getUid());
                     data.put("uname", users.getUname());
                     data.put("aid", users.getAid());
