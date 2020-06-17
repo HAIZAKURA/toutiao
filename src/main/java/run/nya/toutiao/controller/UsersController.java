@@ -31,6 +31,30 @@ public class UsersController {
     private UsersDao usersDao;
 
     /**
+     * @api    loginCheck
+     * @remark 登录状态验证
+     * @access ALL
+     * @method GET
+     * @route  /api/check
+     * @param  session JSONObject
+     * @return res     JSONString
+     */
+    @RequestMapping(value = "/api/check", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ApiOperation(value = "Login Status Checker", httpMethod = "GET", notes = "ALL")
+    public String loginCheck(HttpSession session) {
+        JSONObject res = new JSONObject();
+        JSONObject data = new JSONObject();
+        if (CheckerUtils.isLogin(session)) {
+            res.put("code", 1);
+            res.put("data", FastUtils.sessionToJSON(session));
+        } else {
+            res.put("code", -1);
+            res.put("data", data);
+        }
+        return res.toJSONString();
+    }
+
+    /**
      *
      * @api    userLogin
      * @remark 用户登录
