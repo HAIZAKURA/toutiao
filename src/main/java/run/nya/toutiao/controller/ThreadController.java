@@ -58,11 +58,11 @@ public class ThreadController {
      * @remark 获取分区所有主题
      * @access ALL
      * @method GET
-     * @route  /api/fthread
+     * @route  /api/forumthread/{fid}
      * @param  fid Integer
      * @return res JSONString
      */
-    @RequestMapping(value = "/api/fthread/{fid}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/api/forumthread/{fid}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ApiOperation(value = "Get Forum Thread", httpMethod = "GET", notes = "ALL")
     public String getForumThread(@PathVariable("fid") Integer fid) {
         JSONObject res = new JSONObject();
