@@ -214,7 +214,28 @@ public class ThreadController {
     public String addThread(@RequestBody JSONObject body, HttpSession session) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
-
+        Thread thread = JSONObject.parseObject(body.toJSONString(), Thread.class);
+        String tname = thread.getTname();
+        String tcont = thread.getTcont();
+        Integer fid = thread.getFid();
+        Integer uid = thread.getUid();
+        if (CheckerUtils.isEditor(session) || CheckerUtils.isManager(session) || CheckerUtils.isAdmin(session)) {
+            try {
+                Integer tid = threadDao.addThread(tname, tcont, fid, uid);
+                Integer back = rateDao.addRate(tid);
+                if (back > 0) {
+                    res.put("code", 1);
+                    data.put("tid", tid);
+                } else {
+                    res.put("code", 0);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                res.put("code", 0);
+            }
+        } else {
+            res.put("code", -1);
+        }
         return res.toJSONString();
     }
 
