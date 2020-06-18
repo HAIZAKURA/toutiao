@@ -66,7 +66,7 @@ public class UsersController {
      */
     @RequestMapping(value = "/api/login", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ApiOperation(value = "User Login", httpMethod = "POST", notes = "ALL")
-    public String userLogin(@RequestBody JSONObject body, Boolean keepAlive, ModelMap modelMap, HttpSession session) {
+    public String userLogin(@RequestBody JSONObject body, ModelMap modelMap, HttpSession session) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
         if (CheckerUtils.isLogin(session)) {
@@ -85,11 +85,7 @@ public class UsersController {
                     modelMap.addAttribute("uid", users.getUid());
                     modelMap.addAttribute("uname", users.getUname());
                     modelMap.addAttribute("aid", users.getAid());
-                    if (keepAlive.equals(true)) {
-                        session.setMaxInactiveInterval(-1);
-                    } else {
-                        session.setMaxInactiveInterval(7 * 24 * 3600);
-                    }
+                    session.setMaxInactiveInterval(7 * 24 * 3600);
                     data.put("uid", users.getUid());
                     data.put("uname", users.getUname());
                     data.put("aid", users.getAid());
