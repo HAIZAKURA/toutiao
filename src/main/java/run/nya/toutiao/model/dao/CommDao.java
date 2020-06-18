@@ -16,7 +16,7 @@ public interface CommDao {
     List<Comm> getUserComm(@Param("uid") Integer uid);
 
     // 获取单条评论
-    Comm getOneComm(@Param("cid") Integer cid);
+    Comm getComm(@Param("cid") Integer cid);
 
     // 添加评论
     Integer addComm(@Param("ccont") String ccont, @Param("tid") Integer tid,
