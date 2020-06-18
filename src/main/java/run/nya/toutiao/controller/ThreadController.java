@@ -218,8 +218,10 @@ public class ThreadController {
         String tname = thread.getTname();
         String tcont = thread.getTcont();
         Integer fid = thread.getFid();
-        Integer uid = thread.getUid();
-        if (CheckerUtils.isEditor(session) || CheckerUtils.isManager(session) || CheckerUtils.isAdmin(session)) {
+        Integer uid;
+        uid = Integer.valueOf(session.getAttribute("uid").toString());
+        if ((CheckerUtils.isEditor(session) || CheckerUtils.isManager(session) || CheckerUtils.isAdmin(session))
+                && (uid.equals(thread.getUid()))) {
             try {
                 Integer tid = threadDao.addThread(tname, tcont, fid, uid);
                 Integer back = rateDao.addRate(tid);
@@ -236,6 +238,7 @@ public class ThreadController {
         } else {
             res.put("code", -1);
         }
+        res.put("data", data);
         return res.toJSONString();
     }
 
