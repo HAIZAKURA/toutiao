@@ -19,4 +19,7 @@ public interface RateDao {
     // 点踩
     Integer addBad(@Param("tid") Integer tid);
 
+    // 增加评论数
+    Integer addCnum(@Param("tid") Integer tid);
+
 }
