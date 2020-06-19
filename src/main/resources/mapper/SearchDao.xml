@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="run.nya.toutiao.model.dao.SearchDao">
+    <select id="searchThread" resultType="run.nya.toutiao.model.bean.Thread">
+        SELECT * FROM thread WHERE tname LIKE CONCAT('%', #{key}, '%')
+    </select>
+    <select id="searchUsers" resultType="run.nya.toutiao.model.bean.Users">
+        SELECT * FROM users WHERE uname LIKE CONCAT('%', #{key}, '%')
+    </select>
+</mapper>
