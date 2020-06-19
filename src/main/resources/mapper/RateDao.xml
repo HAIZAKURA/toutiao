@@ -13,4 +13,7 @@
     <update id="addBad">
         UPDATE rate SET rbad = rbad + 1 WHERE tid = #{tid}
     </update>
+    <update id="addCnum">
+        UPDATE rate SET rcnum = rcnum + 1 WHERE tid = #{tid}
+    </update>
 </mapper>
