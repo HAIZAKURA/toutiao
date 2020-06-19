@@ -7,15 +7,6 @@ public class Notice {
     // 通知ID
     private Integer nid;
 
-    // 通知类型
-    private Integer ntype;
-
-    // 通知状态
-    private Integer nstat;
-
-    // 通知 主题ID/评论ID
-    private Integer ntcid;
-
     // 通知内容
     private String ncont;
 
@@ -31,30 +22,6 @@ public class Notice {
 
     public void setNid(Integer nid) {
         this.nid = nid;
-    }
-
-    public Integer getNtype() {
-        return ntype;
-    }
-
-    public void setNtype(Integer ntype) {
-        this.ntype = ntype;
-    }
-
-    public Integer getNstat() {
-        return nstat;
-    }
-
-    public void setNstat(Integer nstat) {
-        this.nstat = nstat;
-    }
-
-    public Integer getNtcid() {
-        return ntcid;
-    }
-
-    public void setNtcid(Integer ntcid) {
-        this.ntcid = ntcid;
     }
 
     public String getNcont() {
