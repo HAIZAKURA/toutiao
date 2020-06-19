@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="run.nya.toutiao.model.dao.NoticeDao">
+    <select id="getAllNotice" resultType="run.nya.toutiao.model.bean.Notice">
+        SELECT * FROM notice
+    </select>
+    <select id="getUserNotice" resultType="run.nya.toutiao.model.bean.Notice">
+        SELECT * FROM notice WHERE uid = #{uid} OR uid = 0
+    </select>
+    <select id="getNotice" resultType="run.nya.toutiao.model.bean.Notice">
+        SELECT * FROM notice WHERE nid = #{nid}
+    </select>
+    <insert id="addNotice" parameterType="run.nya.toutiao.model.bean.Notice" useGeneratedKeys="true" keyProperty="nid">
+        INSERT INTO notice (ncont, uid) VALUES (#{ncont}, #{uid})
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="nid">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+    <update id="modNotice">
+        UPDATE notice SET ncont = #{ncont} WHERE nid = #{nid}
+    </update>
+    <delete id="delNotice">
+        DELETE FROM notice WHERE nid = #{nid}
+    </delete>
+</mapper>
