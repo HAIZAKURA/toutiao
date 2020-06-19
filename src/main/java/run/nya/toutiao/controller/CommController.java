@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import run.nya.toutiao.model.bean.Comm;
 import run.nya.toutiao.model.dao.CommDao;
+import run.nya.toutiao.model.dao.RateDao;
 import run.nya.toutiao.utils.CheckerUtils;
 
 import javax.servlet.http.HttpSession;
@@ -24,6 +25,7 @@ public class CommController {
 
     @Autowired(required = false)
     private CommDao commDao;
+    private RateDao rateDao;
 
     /**
      * @api    getThreadComm
@@ -126,11 +128,16 @@ public class CommController {
         if (CheckerUtils.isUser(session) && (uid.equals(comm.getUid()))) {
             try {
                 Integer cid = commDao.addComm(ccont, tid, uid);
-                res.put("code", 1);
-                data.put("cid", cid);
+                Integer back = rateDao.addCnum(tid);
+                if (back > 0) {
+                    res.put("code", 1);
+                    data.put("cid", cid);
+                } else {
+                    res.put("code", 0);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
-                res.put("data", 0);
+                res.put("code", 0);
             }
         } else {
             res.put("code", -1);
