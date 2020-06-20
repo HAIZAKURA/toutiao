@@ -1,6 +1,8 @@
 package run.nya.toutiao.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +40,13 @@ public class CommController {
      */
     @RequestMapping(value = "/api/tcomm/{tid}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ApiOperation(value = "Get Thread Comments", httpMethod = "GET", notes = "ALL")
-    public String getThreadComm(@PathVariable("tid") Integer tid) {
+    public String getThreadComm(@PathVariable("tid") Integer tid, @RequestParam(defaultValue = "1") Integer page) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
         try {
-            List<Comm> commList = commDao.getThreadComm(tid);
+            PageHelper.startPage(page, 10);
+//            List<Comm> commList = commDao.getThreadComm(tid);
+            PageInfo<Comm> commList = new PageInfo<>(commDao.getThreadComm(tid));
             res.put("code", 1);
             res.put("data", commList);
         } catch (Exception e) {
@@ -64,11 +68,13 @@ public class CommController {
      */
     @RequestMapping(value = "/api/ucomm/{uid}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ApiOperation(value = "Get User Comments", httpMethod = "GET", notes = "ALL")
-    public String getUserComm(@PathVariable("uid") Integer uid) {
+    public String getUserComm(@PathVariable("uid") Integer uid, @RequestParam(defaultValue = "1") Integer page) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
         try {
-            List<Comm> commList = commDao.getUserComm(uid);
+            PageHelper.startPage(page, 10);
+//            List<Comm> commList = commDao.getUserComm(uid);
+            PageInfo<Comm> commList = new PageInfo<>(commDao.getUserComm(uid));
             res.put("code", 1);
             res.put("data", commList);
         } catch (Exception e) {

@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="run.nya.toutiao.model.dao.ThreadDao">
     <select id="getAllThread" resultType="run.nya.toutiao.model.bean.Thread">
-        SELECT * FROM thread WHERE tdel = 0
+        SELECT * FROM thread WHERE tdel = 0 ORDER BY tid DESC
     </select>
     <select id="getForumThread" resultType="run.nya.toutiao.model.bean.Thread">
-        SELECT * FROM thread WHERE fid = #{fid} AND tdel = 0
+        SELECT * FROM thread WHERE fid = #{fid} AND tdel = 0 ORDER BY tid DESC
     </select>
     <select id="getTopThread" resultType="run.nya.toutiao.model.bean.Thread">
         SELECT * FROM thread WHERE ttop = 1 AND tdel = 0

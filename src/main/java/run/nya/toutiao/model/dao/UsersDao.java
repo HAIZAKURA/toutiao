@@ -1,5 +1,6 @@
 package run.nya.toutiao.model.dao;
 
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import run.nya.toutiao.model.bean.Users;
@@ -16,7 +17,7 @@ public interface UsersDao {
     Users adminLogin(@Param("uname") String uname, @Param("upass") String upass);
 
     // 获取所有用户列表
-    List<Users> getAllUsers();
+    Page<Users> getAllUsers();
 
     // 获取用户信息 通过uid
     Users getUserById(@Param("uid") Integer uid);

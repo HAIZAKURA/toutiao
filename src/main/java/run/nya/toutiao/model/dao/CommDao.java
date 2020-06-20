@@ -1,5 +1,6 @@
 package run.nya.toutiao.model.dao;
 
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import run.nya.toutiao.model.bean.Comm;
@@ -10,10 +11,10 @@ import java.util.List;
 public interface CommDao {
 
     // 获取主题评论
-    List<Comm> getThreadComm(@Param("tid") Integer tid);
+    Page<Comm> getThreadComm(@Param("tid") Integer tid);
 
     // 获取用户评论
-    List<Comm> getUserComm(@Param("uid") Integer uid);
+    Page<Comm> getUserComm(@Param("uid") Integer uid);
 
     // 获取单条评论
     Comm getComm(@Param("cid") Integer cid);

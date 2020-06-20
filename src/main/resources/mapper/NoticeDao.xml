@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="run.nya.toutiao.model.dao.NoticeDao">
     <select id="getAllNotice" resultType="run.nya.toutiao.model.bean.Notice">
-        SELECT * FROM notice
+        SELECT * FROM notice  ORDER BY nid DESC
     </select>
     <select id="getUserNotice" resultType="run.nya.toutiao.model.bean.Notice">
-        SELECT * FROM notice WHERE uid = #{uid} OR uid = 0
+        SELECT * FROM notice WHERE uid = #{uid} OR uid = 0  ORDER BY nid DESC
     </select>
     <select id="getNotice" resultType="run.nya.toutiao.model.bean.Notice">
         SELECT * FROM notice WHERE nid = #{nid}

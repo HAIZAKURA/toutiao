@@ -1,6 +1,8 @@
 package run.nya.toutiao.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +39,13 @@ public class ThreadController {
      */
     @RequestMapping(value = "/api/thread", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ApiOperation(value = "Get All Thread", httpMethod = "GET", notes = "ALL")
-    public String getAllThread() {
+    public String getAllThread(@RequestParam(defaultValue = "1") Integer page) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
         try {
-            List<Thread> threadList = threadDao.getAllThread();
+            PageHelper.startPage(page, 20);
+//            List<Thread> threadList = threadDao.getAllThread();
+            PageInfo<Thread> threadList = new PageInfo<>(threadDao.getAllThread());
             res.put("code", 1);
             res.put("data", threadList);
         } catch (Exception e) {
@@ -63,11 +67,13 @@ public class ThreadController {
      */
     @RequestMapping(value = "/api/fthread/{fid}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ApiOperation(value = "Get Forum Thread", httpMethod = "GET", notes = "ALL")
-    public String getForumThread(@PathVariable("fid") Integer fid) {
+    public String getForumThread(@PathVariable("fid") Integer fid, @RequestParam(defaultValue = "1") Integer page) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
         try {
-            List<Thread> threadList = threadDao.getForumThread(fid);
+            PageHelper.startPage(page, 20);
+//            List<Thread> threadList = threadDao.getForumThread(fid);
+            PageInfo<Thread> threadList = new PageInfo<>(threadDao.getForumThread(fid));
             res.put("code", 1);
             res.put("data", threadList);
         } catch (Exception e) {

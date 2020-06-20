@@ -1,6 +1,8 @@
 package run.nya.toutiao.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -268,11 +270,13 @@ public class UsersController {
      */
     @RequestMapping(value = "/api/users", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ApiOperation(value = "Get All Users Information", httpMethod = "GET", notes = "ALL")
-    public String getAllUsers() {
+    public String getAllUsers(@RequestParam(defaultValue = "1") Integer page) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
         try {
-            List<Users> usersList = usersDao.getAllUsers();
+            PageHelper.startPage(page, 10);
+//            List<Users> usersList = usersDao.getAllUsers();
+            PageInfo<Users> usersList = new PageInfo<>(usersDao.getAllUsers());
             res.put("code", 1);
             res.put("data", usersList);
         } catch (Exception e) {

@@ -1,5 +1,6 @@
 package run.nya.toutiao.model.dao;
 
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import run.nya.toutiao.model.bean.Thread;
@@ -10,10 +11,10 @@ import java.util.List;
 public interface ThreadDao {
 
     // 获取所有主题
-    List<Thread> getAllThread();
+    Page<Thread> getAllThread();
 
     // 获取分区所有主题
-    List<Thread> getForumThread(@Param("fid") Integer fid);
+    Page<Thread> getForumThread(@Param("fid") Integer fid);
 
     // 获取所有置顶主题
     List<Thread> getTopThread();
