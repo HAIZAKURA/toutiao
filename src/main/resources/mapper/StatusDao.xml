@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="run.nya.toutiao.model.dao.StatusDao">
+    <select id="getUsersNum" resultType="java.lang.Integer">
+        SELECT COUNT(users.uid) AS 'users' FROM users
+    </select>
+    <select id="getThreadNum" resultType="java.lang.Integer">
+        SELECT COUNT(thread.tid) AS 'thread' FROM thread
+    </select>
+    <select id="getCommNum" resultType="java.lang.Integer">
+        SELECT COUNT(comm.cid) AS 'comm' FROM comm
+    </select>
+    <select id="getForumNum" resultType="java.lang.Integer">
+        SELECT COUNT(forum.fid) AS 'forum' FROM forum
+    </select>
+</mapper>
