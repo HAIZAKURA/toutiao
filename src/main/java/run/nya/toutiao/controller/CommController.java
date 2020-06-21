@@ -13,7 +13,6 @@ import run.nya.toutiao.model.dao.RateDao;
 import run.nya.toutiao.utils.CheckerUtils;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @RestController
 @Api(tags = {"Comm"})

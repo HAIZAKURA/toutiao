@@ -11,8 +11,6 @@ import run.nya.toutiao.model.bean.Thread;
 import run.nya.toutiao.model.bean.Users;
 import run.nya.toutiao.model.dao.SearchDao;
 
-import java.util.List;
-
 @RestController
 @Api(tags = {"Search"})
 public class SearchController {
