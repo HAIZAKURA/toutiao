@@ -16,7 +16,6 @@ import run.nya.toutiao.utils.CheckerUtils;
 import run.nya.toutiao.utils.FastUtils;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @RestController
 @SessionAttributes(value = {"uid", "uname", "aid"}, types = {Integer.class, String.class, Integer.class})
