@@ -221,7 +221,7 @@ public class UsersController {
     /**
      * @api    addUser
      * @remark 添加用户
-     * @access Admin
+     * @access Manager Admin
      * @method POST
      * @route  /api/users
      * @param  body    JSONObject
@@ -229,7 +229,7 @@ public class UsersController {
      * @return res     JSONString
      */
     @RequestMapping(value = "/api/users", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    @ApiOperation(value = "Create User", httpMethod = "POST", notes = "Admin")
+    @ApiOperation(value = "Create User", httpMethod = "POST", notes = "Manager Admin")
     public String addUser(@RequestBody JSONObject body, HttpSession session) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
@@ -241,7 +241,7 @@ public class UsersController {
         data.put("uname", uname);
         data.put("umail", umail);
         data.put("aid", aid);
-        if (CheckerUtils.isAdmin(session)) {
+        if (CheckerUtils.isAdmin(session) || CheckerUtils.isManager(session)) {
             try {
                 Integer back = usersDao.addUser(uname, upass, umail, aid);
                 if (back > 0) {
@@ -330,7 +330,7 @@ public class UsersController {
     /**
      * @api    banUserBy
      * @remark 封禁用户 通过uid/uname
-     * @access Admin / Manager
+     * @access Manager Admin
      * @method DELETE
      * @route  /api/users/{value}
      * @param  value   String
@@ -418,8 +418,8 @@ public class UsersController {
 
     /**
      * @api    modUserAdmin
-     * @remark 修改用户信息 Admin
-     * @access Admin
+     * @remark 修改用户信息 Manager/Admin
+     * @access Manager Admin
      * @method PUT
      * @route  /api/users/{uid}
      * @param  uid     Integer
@@ -428,11 +428,11 @@ public class UsersController {
      * @return res     JSONString
      */
     @RequestMapping(value = "/api/users/{uid}", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
-    @ApiOperation(value = "Modify User Information By Admin", httpMethod = "PUT", notes = "Admin")
+    @ApiOperation(value = "Modify User Information By Manager/Admin", httpMethod = "PUT", notes = "Manager Admin")
     public String modUserAdmin(@PathVariable("uid") Integer uid, @RequestBody JSONObject body, HttpSession session) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
-        if (CheckerUtils.isAdmin(session)) {
+        if (CheckerUtils.isAdmin(session) || CheckerUtils.isManager(session)) {
             Users users = JSONObject.parseObject(body.toJSONString(), Users.class);
             String umail = users.getUmail();
             String udesc = users.getUdesc();

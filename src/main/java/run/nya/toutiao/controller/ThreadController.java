@@ -27,6 +27,8 @@ public class ThreadController {
 
     @Autowired(required = false)
     private ThreadDao threadDao;
+
+    @Autowired(required = false)
     private RateDao rateDao;
 
     /**
@@ -290,7 +292,7 @@ public class ThreadController {
     /**
      * @api    delThread
      * @remark 删除主题
-     * @access Manager Admin
+     * @access Editor Manager Admin
      * @method DELETE
      * @route  /api/thread/{tid}
      * @param  tid     Integer
@@ -298,12 +300,12 @@ public class ThreadController {
      * @return res     JSONString
      */
     @RequestMapping(value = "/api/thread/{tid}", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
-    @ApiOperation(value = "Delete Thread", httpMethod = "DELETE", notes = "Manager Admin")
+    @ApiOperation(value = "Delete Thread", httpMethod = "DELETE", notes = "Editor Manager Admin")
     public String delThread(@PathVariable("tid") Integer tid, HttpSession session) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
         data.put("tid", tid);
-        if (CheckerUtils.isManager(session) || CheckerUtils.isAdmin(session)) {
+        if (CheckerUtils.isEditor(session) || CheckerUtils.isManager(session) || CheckerUtils.isAdmin(session)) {
             try {
                 Integer back = threadDao.delThread(tid);
                 if (back > 0) {

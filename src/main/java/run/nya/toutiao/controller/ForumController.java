@@ -91,7 +91,7 @@ public class ForumController {
     /**
      * @api    addForum
      * @remark 添加分区
-     * @access Admin
+     * @access Manager Admin
      * @method POST
      * @route  /api/forum
      * @param  body    JSONObject
@@ -99,7 +99,7 @@ public class ForumController {
      * @return res     JSONString
      */
     @RequestMapping(value = "/api/forum", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    @ApiOperation(value = "Create Forum", httpMethod = "POST", notes = "Admin")
+    @ApiOperation(value = "Create Forum", httpMethod = "POST", notes = "Manager Admin")
     public String addForum(@RequestBody JSONObject body, HttpSession session) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
@@ -108,7 +108,7 @@ public class ForumController {
         String fdesc = forum.getFdesc();
         data.put("fname", fname);
         data.put("fdesc", fdesc);
-        if (CheckerUtils.isAdmin(session)) {
+        if (CheckerUtils.isAdmin(session) || CheckerUtils.isManager(session)) {
             try {
                 Integer back = forumDao.addForum(fname, fdesc);
                 if (back > 0) {
@@ -130,19 +130,19 @@ public class ForumController {
     /**
      * @api    delForum
      * @remark 删除分区
-     * @access Admin
+     * @access Manager Admin
      * @method DELETE
      * @route  /api/forum/{fid}
      * @param  session HttpSession
      * @return res     JSONString
      */
     @RequestMapping(value = "/api/forum/{fid}", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
-    @ApiOperation(value = "Delete Forum By ID", httpMethod = "DELETE", notes = "Admin")
+    @ApiOperation(value = "Delete Forum By ID", httpMethod = "DELETE", notes = "Manager Admin")
     public String delForum(@PathVariable("fid") Integer fid, HttpSession session) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
         data.put("fid", fid);
-        if (CheckerUtils.isAdmin(session)) {
+        if (CheckerUtils.isAdmin(session) || CheckerUtils.isManager(session)) {
             try {
                 Integer back = forumDao.defForum(fid);
                 if (back > 0) {
@@ -164,7 +164,7 @@ public class ForumController {
     /**
      * @api    modForum
      * @remark 修改分区信息
-     * @access Admin
+     * @access Manager Admin
      * @method PUT
      * @route  /api/forum/{fid}
      * @param  body    JSONObject
@@ -172,7 +172,7 @@ public class ForumController {
      * @return res     JSONString
      */
     @RequestMapping(value = "/api/forum/{fid}", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
-    @ApiOperation(value = "Modify Forum By ID", httpMethod = "PUT", notes = "Admin")
+    @ApiOperation(value = "Modify Forum By ID", httpMethod = "PUT", notes = "Manager Admin")
     public String modForum(@RequestBody JSONObject body, @PathVariable("fid") Integer fid, HttpSession session) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
@@ -182,7 +182,7 @@ public class ForumController {
         data.put("fid", fid);
         data.put("fname", fname);
         data.put("fdesc", fdesc);
-        if (CheckerUtils.isAdmin(session)) {
+        if (CheckerUtils.isAdmin(session) || CheckerUtils.isManager(session)) {
             try {
                 Integer back = forumDao.modForum(fid, fname, fdesc);
                 if (back > 0) {

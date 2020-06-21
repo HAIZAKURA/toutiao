@@ -27,6 +27,8 @@ public class CommController {
 
     @Autowired(required = false)
     private CommDao commDao;
+
+    @Autowired(required = false)
     private RateDao rateDao;
 
     /**
