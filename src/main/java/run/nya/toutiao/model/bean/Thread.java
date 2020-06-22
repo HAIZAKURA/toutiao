@@ -28,6 +28,12 @@ public class Thread {
     // 用户ID
     private Integer uid;
 
+    // 用户名
+    private String uname;
+
+    // 用户简介
+    private String udesc;
+
     public Integer getTid() {
         return tid;
     }
@@ -90,6 +96,22 @@ public class Thread {
 
     public void setUid(Integer uid) {
         this.uid = uid;
+    }
+
+    public String getUname() {
+        return uname;
+    }
+
+    public void setUname(String uname) {
+        this.uname = uname;
+    }
+
+    public String getUdesc() {
+        return udesc;
+    }
+
+    public void setUdesc(String udesc) {
+        this.udesc = udesc;
     }
 
 }

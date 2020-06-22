@@ -5,8 +5,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import run.nya.toutiao.model.bean.Comm;
 
-import java.util.List;
-
 @Mapper
 public interface CommDao {
 
