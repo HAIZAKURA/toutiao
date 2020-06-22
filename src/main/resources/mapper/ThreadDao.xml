@@ -2,26 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="run.nya.toutiao.model.dao.ThreadDao">
     <select id="getAllThread" resultType="run.nya.toutiao.model.bean.Thread">
-        SELECT thread.tid, thread.tname, thread.tcont, thread.ttime, thread.ttop, thread.tdel, thread.fid, thread.uid, users.uname, users.udesc
-        FROM thread, users
-        WHERE tdel = 0 AND thread.uid = users.uid
-        ORDER BY tid DESC
+        SELECT thread.tid, thread.tname, thread.tcont, thread.ttime, thread.ttop, thread.tdel, thread.fid, thread.uid, users.uname, users.udesc, forum.fname
+        FROM thread, users, forum
+        WHERE thread.tdel = 0 AND thread.uid = users.uid AND thread.fid = forum.fid
+        ORDER BY thread.tid DESC
     </select>
     <select id="getForumThread" resultType="run.nya.toutiao.model.bean.Thread">
-        SELECT thread.tid, thread.tname, thread.tcont, thread.ttime, thread.ttop, thread.tdel, thread.fid, thread.uid, users.uname, users.udesc
-        FROM thread, users
-        WHERE fid = #{fid} AND tdel = 0 AND thread.uid = users.uid
-        ORDER BY tid DESC
+        SELECT thread.tid, thread.tname, thread.tcont, thread.ttime, thread.ttop, thread.tdel, thread.fid, thread.uid, users.uname, users.udesc, forum.fname
+        FROM thread, users, forum
+        WHERE thread.fid = #{fid} AND tdel = 0 AND thread.uid = users.uid AND forum.fid = #{fid}
+        ORDER BY thread.tid DESC
     </select>
     <select id="getTopThread" resultType="run.nya.toutiao.model.bean.Thread">
-        SELECT thread.tid, thread.tname, thread.tcont, thread.ttime, thread.ttop, thread.tdel, thread.fid, thread.uid, users.uname, users.udesc
-        FROM thread, users
-        WHERE ttop = 1 AND tdel = 0 AND thread.uid = users.uid
+        SELECT thread.tid, thread.tname, thread.tcont, thread.ttime, thread.ttop, thread.tdel, thread.fid, thread.uid, users.uname, users.udesc, forum.fname
+        FROM thread, users, forum
+        WHERE thread.ttop = 1 AND thread.tdel = 0 AND thread.uid = users.uid AND thread.fid = forum.fid
     </select>
     <select id="getThread" resultType="run.nya.toutiao.model.bean.Thread">
-        SELECT thread.tid, thread.tname, thread.tcont, thread.ttime, thread.ttop, thread.tdel, thread.fid, thread.uid, users.uname, users.udesc
-        FROM thread, users
-        WHERE tid = #{tid} AND tdel = 0 AND thread.uid = users.uid
+        SELECT thread.tid, thread.tname, thread.tcont, thread.ttime, thread.ttop, thread.tdel, thread.fid, thread.uid, users.uname, users.udesc, forum.fname
+        FROM thread, users, forum
+        WHERE thread.tid = #{tid} AND thread.tdel = 0 AND thread.uid = users.uid  AND thread.fid = forum.fid
     </select>
     <insert id="addThread" parameterType="run.nya.toutiao.model.bean.Thread" useGeneratedKeys="true" keyProperty="tid">
         INSERT INTO thread (tname, tcont, fid, uid) VALUES (#{tname}, #{tcont}, #{fid}, #{uid})

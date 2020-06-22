@@ -25,6 +25,9 @@ public class Thread {
     // 分区ID
     private Integer fid;
 
+    // 分区名
+    private String fname;
+
     // 用户ID
     private Integer uid;
 
@@ -112,6 +115,14 @@ public class Thread {
 
     public void setUdesc(String udesc) {
         this.udesc = udesc;
+    }
+
+    public String getFname() {
+        return fname;
+    }
+
+    public void setFname(String fname) {
+        this.fname = fname;
     }
 
 }

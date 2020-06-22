@@ -28,6 +28,9 @@ public class Users {
     // 权限ID
     private Integer aid;
 
+    // 权限名
+    private String aname;
+
     public Integer getUid() {
         return uid;
     }
@@ -90,6 +93,14 @@ public class Users {
 
     public void setAid(Integer aid) {
         this.aid = aid;
+    }
+
+    public String getAname() {
+        return aname;
+    }
+
+    public void setAname(String aname) {
+        this.aname = aname;
     }
 
 }

@@ -12,18 +12,19 @@
         WHERE uname = #{uname} AND upass = #{upass} AND aid != 1
     </select>
     <select id="getAllUsers" resultType="run.nya.toutiao.model.bean.Users">
-        SELECT uid, uname, umail, udesc, ustat, utime, aid
-        FROM users
+        SELECT users.uid, users.uname, users.umail, users.udesc, users.ustat, users.utime, users.aid, auth.aname
+        FROM users, auth
+        WHERE users.aid = auth.aid
     </select>
     <select id="getUserById" resultType="run.nya.toutiao.model.bean.Users">
-        SELECT uid, uname, umail, udesc, ustat, utime, aid
-        FROM users
-        WHERE uid = #{uid}
+        SELECT users.uid, users.uname, users.umail, users.udesc, users.ustat, users.utime, users.aid, auth.aname
+        FROM users, auth
+        WHERE users.uid = #{uid} AND users.aid = auth.aid
     </select>
     <select id="getUserByName" resultType="run.nya.toutiao.model.bean.Users">
-        SELECT uid, uname, umail, udesc, ustat, utime, aid
-        FROM users
-        WHERE uname = #{uname}
+        SELECT users.uid, users.uname, users.umail, users.udesc, users.ustat, users.utime, users.aid, auth.aname
+        FROM users, auth
+        WHERE users.uname = #{uname} AND users.aid = auth.aid
     </select>
     <insert id="regUser">
         INSERT INTO users (uname, upass, umail)
