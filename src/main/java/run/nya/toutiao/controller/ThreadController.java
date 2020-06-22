@@ -226,10 +226,9 @@ public class ThreadController {
         String tname = thread.getTname();
         String tcont = thread.getTcont();
         Integer fid = thread.getFid();
-        Integer uid;
-        uid = Integer.valueOf(session.getAttribute("uid").toString());
-        if ((CheckerUtils.isEditor(session) || CheckerUtils.isManager(session) || CheckerUtils.isAdmin(session))
-                && (uid.equals(thread.getUid()))) {
+        int uid;
+        uid = Integer.parseInt(session.getAttribute("uid").toString());
+        if (CheckerUtils.isEditor(session) || CheckerUtils.isManager(session) || CheckerUtils.isAdmin(session)) {
             try {
                 Integer tid = threadDao.addThread(tname, tcont, fid, uid);
                 Integer back = rateDao.addRate(tid);
@@ -256,17 +255,17 @@ public class ThreadController {
      * @access Editor Manager Admin
      * @method PUT
      * @route  /api/thread
+     * @param  tid     Integer
      * @param  body    JSONObject
      * @param  session HttpSession
      * @return res     JSONString
      */
-    @RequestMapping(value = "/api/thread", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/api/thread/{tid}", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
     @ApiOperation(value = "Modify Thread", httpMethod = "PUT", notes = "Editor Manager Admin")
-    public String modThread(@RequestBody JSONObject body, HttpSession session) {
+    public String modThread(@PathVariable("tid") Integer tid, @RequestBody JSONObject body, HttpSession session) {
         JSONObject res = new JSONObject();
         JSONObject data = new JSONObject();
         Thread thread = JSONObject.parseObject(body.toJSONString(), Thread.class);
-        Integer tid = thread.getTid();
         String tname = thread.getTname();
         String tcont = thread.getTcont();
         data.put("tid", tid);
