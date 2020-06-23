@@ -10,7 +10,7 @@
     <select id="getForumThread" resultType="run.nya.toutiao.model.bean.Thread">
         SELECT thread.tid, thread.tname, thread.tcont, thread.ttime, thread.ttop, thread.tdel, thread.fid, thread.uid, users.uname, users.udesc, forum.fname
         FROM thread, users, forum
-        WHERE thread.fid = #{fid} AND tdel = 0 AND thread.uid = users.uid AND forum.fid = #{fid}
+        WHERE thread.fid = #{fid} AND thread.tdel = 0 AND thread.uid = users.uid AND forum.fid = #{fid}
         ORDER BY thread.tid DESC
     </select>
     <select id="getTopThread" resultType="run.nya.toutiao.model.bean.Thread">
