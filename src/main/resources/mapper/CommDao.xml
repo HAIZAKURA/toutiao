@@ -4,12 +4,12 @@
     <select id="getThreadComm" resultType="run.nya.toutiao.model.bean.Comm">
         SELECT comm.cid, comm.ccont, comm.ctime, comm.cdel, comm.tid, comm.uid, users.uname, users.udesc
         FROM comm, users
-        WHERE comm.uid = users.uid AND comm.tid = #{tid}
+        WHERE comm.uid = users.uid AND comm.tid = #{tid} AND comm.cdel = 0
     </select>
     <select id="getUserComm" resultType="run.nya.toutiao.model.bean.Comm">
         SELECT comm.cid, comm.ccont, comm.ctime, comm.cdel, comm.tid, comm.uid, users.uname, users.udesc
         FROM comm, users
-        WHERE comm.uid = #{uid} AND users.uid = #{uid}
+        WHERE comm.uid = #{uid} AND users.uid = #{uid} AND comm.cdel = 0
     </select>
     <select id="getComm" resultType="run.nya.toutiao.model.bean.Comm">
         SELECT comm.cid, comm.ccont, comm.ctime, comm.cdel, comm.tid, comm.uid, users.uname, users.udesc
